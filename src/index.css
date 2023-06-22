@@ -9,3 +9,28 @@ body {
   --surface1: #e9ecef;
 	--color1: #FF9800;
 }
+
+body, p {
+	font-size: clamp(1rem, 0.462vw + 0.88rem, 1.25rem);
+	line-height: clamp(1.563rem, 0.576vw + 1.414rem, 1.875rem);
+}
+
+.fluid-h1 {
+	font-size: clamp(2rem, 0.924vw + 1.761rem, 2.5rem);
+	line-height: clamp(2.688rem, 1.191vw + 2.38rem, 3.333rem);
+}
+
+.fluid-h2 {
+	font-size: clamp(1.625rem, 0.693vw + 1.446rem, 2rem);
+	line-height: clamp(2.187rem, 0.933vw + 1.946rem, 2.692rem);
+}
+
+.fluid-h3 {
+	font-size: clamp(1.375rem, 0.577vw + 1.226rem, 1.688rem);
+	line-height: clamp(1.937rem, 0.708vw + 1.754rem, 2.32rem);
+}
+
+.fluid-h4 {
+	font-size: clamp(1.125rem, 0.462vw + 1.005rem, 1.375rem);
+	line-height: clamp(1.624rem, 0.555vw + 1.481rem, 1.925rem);
+}

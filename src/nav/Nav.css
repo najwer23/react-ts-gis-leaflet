@@ -72,9 +72,10 @@
 
 .popup-menu-list {
 	text-decoration: unset;
-	text-align: right;
+	text-align: left;
 	list-style-type: none;
 	padding-bottom: 100px;
+	padding-right: 40px;
 }
 
 .popup-menu-list li a{
@@ -107,3 +108,12 @@
 @media (max-width: 992px) and (max-width: 1199.98px) { }
 
 @media (min-width: 1200px) and (max-width: 1399.98px) { }
+
+
+
+.CUSTOM_PREFIX__single-value,
+.CUSTOM_PREFIX__placeholder {
+    position: static;
+    transform: none;
+    max-width: none;
+  }
