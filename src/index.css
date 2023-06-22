@@ -4,3 +4,8 @@ body {
   font-style: normal;
   font-weight: 400;
 }
+
+:root {
+  --surface1: #e9ecef;
+	--color1: #FF9800;
+}

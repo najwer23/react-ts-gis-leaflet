@@ -1,11 +1,14 @@
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap } from "react-leaflet";
+import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap, useMapEvents } from "react-leaflet";
 import "./StageMap.css"
 import { DrawCountryBoundryLine } from "./DrawCountryBoundryLine";
+import { Nav } from "../nav/Nav"
 
 function StageMap() {
-
 	return (
 		<>
+
+			<Nav />
+
 			{/* https://github.com/najwer23/antoni-gaudi/blob/master/assets/js/leaflet.js */}
 			{/* http://leaflet-extras.github.io/leaflet-providers/preview/ */}
 
@@ -20,6 +23,7 @@ function StageMap() {
 					attribution=""
 					url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				/>
+				<MapEvents />
 
 			</MapContainer>
 		</>
@@ -27,6 +31,18 @@ function StageMap() {
 }
 
 export default StageMap;
+
+
+const MapEvents = () => {
+	useMapEvents({
+		click(e) {
+			console.log(e.latlng.lat);
+			console.log(e.latlng.lng);
+		},
+	});
+	return <></>;
+}
+
 
 
 
