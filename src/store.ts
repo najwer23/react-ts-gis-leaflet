@@ -1,9 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import stageReducer from "./features/stage/StageSlice";
 
 export const store = configureStore({
 	reducer: {
-		stage: stageReducer,
+
 	},
 });
 
