@@ -16,7 +16,7 @@ function StageMap() {
 				center={[52.0250921, 18.6386737]}
 				zoom={7}
 				maxZoom={18}
-				scrollWheelZoom={false}
+				scrollWheelZoom={true}
 			>
 				<DrawCountryBoundryLine />
 				<TileLayer
