@@ -1,4 +1,4 @@
-import StageMap from './stageMap/StageMap'
+import { StageMap }  from './stageMap/StageMap'
 import { Provider } from "react-redux";
 import store from "./store";
 

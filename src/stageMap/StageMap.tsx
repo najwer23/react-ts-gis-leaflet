@@ -1,12 +1,15 @@
-import { MapContainer, TileLayer, Marker, Popup, GeoJSON, useMap, useMapEvents } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import "./StageMap.css"
 import { DrawCountryBoundryLine } from "./DrawCountryBoundryLine";
 import { Nav } from "../nav/Nav"
+import { DrawGeoJsonFromAPI } from "./DrawGeoJsonFromAPI";
+import { useAppSelector, useAppDispatch } from "../hooks";
+import * as MapElementsSlice from "../features/MapElementsSlice";
 
-function StageMap() {
+
+export const StageMap = ():JSX.Element => {
 	return (
 		<>
-
 			<Nav />
 
 			{/* https://github.com/najwer23/antoni-gaudi/blob/master/assets/js/leaflet.js */}
@@ -18,6 +21,7 @@ function StageMap() {
 				maxZoom={18}
 				scrollWheelZoom={true}
 			>
+				<DrawGeoJsonFromAPI />
 				<DrawCountryBoundryLine />
 				<TileLayer
 					attribution=""
@@ -30,14 +34,18 @@ function StageMap() {
 	)
 }
 
-export default StageMap;
-
-
 const MapEvents = () => {
+	const dispatch = useAppDispatch();
+
 	useMapEvents({
 		click(e) {
-			console.log(e.latlng.lat);
-			console.log(e.latlng.lng);
+			dispatch(MapElementsSlice.setCoords(
+				{
+					lat: e.latlng.lat,
+					lng: e.latlng.lng
+				}
+			));
+			dispatch(MapElementsSlice.getPlans());
 		},
 	});
 	return <></>;

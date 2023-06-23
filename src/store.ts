@@ -1,8 +1,9 @@
 import { configureStore } from "@reduxjs/toolkit";
+import MapElementsSliceReducer from "./features/MapElementsSlice";
 
 export const store = configureStore({
 	reducer: {
-
+		mapElements: MapElementsSliceReducer,
 	},
 });
 

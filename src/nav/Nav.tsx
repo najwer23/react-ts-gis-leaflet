@@ -3,6 +3,11 @@ import { useEffect, useState } from "react";
 import { Button } from '../buttons/Button';
 import { useWindowSize } from "../utils/Utils";
 import Select from 'react-select';
+import { useAppSelector, useAppDispatch } from "../hooks";
+import * as MapElementsSlice from "../features/MapElementsSlice";
+import { RootState } from "./../store";
+
+
 
 export const Nav = () : JSX.Element => {
 	return (
@@ -20,9 +25,38 @@ export const Nav = () : JSX.Element => {
 
 
 const OptionListForSelect = [
-	{ value: "1", label: "Pozwolenia na budowę" },
-	{ value: "2", label: "Plany zagospodarowania terenu" },
+	{ value: "0", label: "Pozwolenia na budowę" },
+	{ value: "1", label: "Plany zagospodarowania terenu" },
 ];
+
+const OptionListForSelectCSS = {
+	control: (base: any) => ({
+		...base,
+		border: 0,
+		boxShadow: 'none'
+	}),
+	option: (base: any, state: any) => ({
+		...base,
+		width: "200px",
+		minWidth: "100%",
+		backgroundColor: state.isSelected ? "#c4c4c4" : "",
+		'&:hover': {
+			backgroundColor: state.isSelected ? '#c4c4c4' : 'whitesmoke',
+			cursor: "pointer"
+		},
+		color: state.isSelected ? "black" : "",
+	}),
+	input: (base: any, state: any) => ({
+		...base,
+		width: "max-content",
+		minWidth: "100%",
+	}),
+	menu: (base: any) => ({
+		...base,
+		width: "max-content",
+		minWidth: "100%",
+	}),
+}
 
 
 
@@ -35,6 +69,9 @@ const OptionListForSelect = [
 const Menu = (): JSX.Element => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [width,] = useWindowSize();
+	const status = useAppSelector((state: RootState) => state.mapElements.status);
+	const selectChoice = useAppSelector((state: RootState) => state.mapElements.selectChoice);
+	const dispatch = useAppDispatch();
 
 	useEffect(() => {
 		let body = document.querySelector("body")
@@ -49,36 +86,8 @@ const Menu = (): JSX.Element => {
 		setIsMenuOpen(!isMenuOpen);
 	}
 
-
-
-
-	const OptionListForSelectCSS = {
-		control: (base: any) => ({
-			...base,
-			border: 0,
-			boxShadow: 'none'
-		}),
-		option: (base: any, state: any) => ({
-			...base,
-			width: "200px",
-			minWidth: "100%",
-			backgroundColor: state.isSelected ? "#c4c4c4" : "",
-			'&:hover': {
-				backgroundColor: state.isSelected ? '#c4c4c4' : 'whitesmoke',
-				cursor: "pointer"
-			},
-			color: state.isSelected ? "black" : "",
-		}),
-		input: (base: any, state: any) => ({
-			...base,
-			width: "max-content",
-			minWidth: "100%",
-		}),
-		menu: (base: any) => ({
-			...base,
-			width: "max-content",
-			minWidth: "100%",
-		}),
+	function setSelectChoice(value: any) {
+		dispatch(MapElementsSlice.setSelectChoice(value));
 	}
 
 	return (
@@ -117,12 +126,11 @@ const Menu = (): JSX.Element => {
 									<Select
 										styles={OptionListForSelectCSS}
 										defaultValue={OptionListForSelect[0]}
-										// onChange={setCoords}
+										onChange={(choice) => setSelectChoice(choice!.value)}
 										options={OptionListForSelect}
 										isSearchable={false}
 									/>
 								</div>
-
 
 							</li>
 						</ul>
