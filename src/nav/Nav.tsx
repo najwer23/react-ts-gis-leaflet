@@ -69,7 +69,6 @@ const OptionListForSelectCSS = {
 const Menu = (): JSX.Element => {
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const [width,] = useWindowSize();
-	const status = useAppSelector((state: RootState) => state.mapElements.status);
 	const selectChoice = useAppSelector((state: RootState) => state.mapElements.selectChoice);
 	const dispatch = useAppDispatch();
 
@@ -86,7 +85,7 @@ const Menu = (): JSX.Element => {
 		setIsMenuOpen(!isMenuOpen);
 	}
 
-	function setSelectChoice(value: any) {
+	function setSelectChoice(value: string) {
 		dispatch(MapElementsSlice.setSelectChoice(value));
 		dispatch(MapElementsSlice.setJsonPlans(null));
 	}

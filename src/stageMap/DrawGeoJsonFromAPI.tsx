@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
 import { GeoJSON } from "react-leaflet";
-import { useAppSelector, useAppDispatch } from "../hooks";
+import { useAppSelector } from "../hooks";
 import { RootState } from "../store";
 
 
@@ -17,7 +16,7 @@ export const DrawGeoJsonFromAPI = () => {
 		fillColor: "transparent",
 		weight: 2,
 		opacity: 1,
-		color: colors[selectChoice],
+		color: colors[Number(selectChoice)],
 		fillOpacity: 1
 	};
 

@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { BToken } from "../globals";
 
 const initialState: {
-	selectChoice: any | null;
-	jsonPlans: any | null;
+	selectChoice: string | null;
+	jsonPlans: any;
 	status: "idle" | "loaded" | "error";
-	error: any;
-	lat: any;
-	lng: any;
+	error: string | null;
+	lat: number | null;
+	lng: number | null;
 } = {
-	selectChoice: '0',
+	selectChoice: "0",
 	jsonPlans: null,
 	status: "idle",
 	error: null,
@@ -42,6 +43,9 @@ export const MapElementsSlice = createSlice({
 	},
 });
 
+
+
+
 export const getPlans = () => async (dispatch: any, getState: any) => {
 
 	try {
@@ -51,7 +55,7 @@ export const getPlans = () => async (dispatch: any, getState: any) => {
 		let rad = 100;
 		let selectChoice = getState().mapElements.selectChoice;
 		let URL = "", res, data;
-		let Btoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NzI4OTg0MSwianRpIjoiZjgyNjZhN2YtN2VhOC00YjBhLWE1ZmQtODE5ZTNlZmIwMjAzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NTksIm5iZiI6MTY4NzI4OTg0MSwiY3NyZiI6ImUyYThiMzQ1LTI4ZWMtNDU2MC1iYmVjLWQ3ZDJhZTcyZmI3OSIsImV4cCI6MTY4Nzg5NDY0MX0.9hHhT7Qwlg8qkjmuuw44Wpsfe-Qqi-2kYrgCcVJFQlQ";
+		let Btoken = BToken;
 
 		// GET Permit Index
 		if (selectChoice === "0") {
@@ -78,7 +82,7 @@ export const getPlans = () => async (dispatch: any, getState: any) => {
 			dispatch(setErrorState("Uknown Error"));
 		}
 
-		data = await res.json();
+		data = await res.json() ;
 
 		if (res.status === 200) {
 			dispatch(setJsonPlans(data));

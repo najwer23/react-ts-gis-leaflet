@@ -6,8 +6,6 @@ import { DrawGeoJsonFromAPI } from "./DrawGeoJsonFromAPI";
 import { useAppSelector, useAppDispatch } from "../hooks";
 import * as MapElementsSlice from "../features/MapElementsSlice";
 import { RootState } from "./../store";
-import { useWindowSize } from "../utils/Utils";
-
 
 
 export const StageMap = ():JSX.Element => {
