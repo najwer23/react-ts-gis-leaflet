@@ -88,6 +88,7 @@ const Menu = (): JSX.Element => {
 
 	function setSelectChoice(value: any) {
 		dispatch(MapElementsSlice.setSelectChoice(value));
+		dispatch(MapElementsSlice.setJsonPlans(null));
 	}
 
 	return (

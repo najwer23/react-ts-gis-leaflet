@@ -8,3 +8,13 @@
 .leaflet-control-attribution.leaflet-control {
 	display: none;
 }
+
+.errorMsg {
+	position: absolute;
+	bottom: 0;
+	z-index: 9998;
+	width: 100%;
+	text-align: center;
+	color: red;
+	background-color: whitesmoke;
+}

@@ -6,14 +6,18 @@ import { RootState } from "../store";
 
 export const DrawGeoJsonFromAPI = () => {
 	const jsonPlans = useAppSelector((state: RootState) => state.mapElements.jsonPlans);
+	const selectChoice = useAppSelector((state: RootState) => state.mapElements.selectChoice);
 
-	console.log(42, jsonPlans)
+	let colors: any = {
+		0: "orangered",
+		1: "purple"
+	}
 
 	let style = {
 		fillColor: "transparent",
 		weight: 2,
 		opacity: 1,
-		color: "purple", //Outline color
+		color: colors[selectChoice],
 		fillOpacity: 1
 	};
 

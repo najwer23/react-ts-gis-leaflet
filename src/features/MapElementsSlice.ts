@@ -1,6 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { useSelector, useDispatch } from "react-redux";
-
 
 const initialState: {
 	selectChoice: any | null;
@@ -25,17 +23,21 @@ export const MapElementsSlice = createSlice({
 		setJsonPlans: (state, action) => {
 			state.jsonPlans = action.payload;
 			state.status = "loaded";
+			state.error = "";
 		},
 		setSelectChoice: (state, action) => {
 			state.selectChoice = action.payload;
+			state.error = "";
+			state.status = "idle";
 		},
 		setErrorState: (state, action) => {
 			state.error = action.payload;
 			state.status = "error";
+			state.jsonPlans = null
 		},
 		setCoords: (state, action) => {
-			state.lat = action.payload.lat
-			state.lng = action.payload.lng
+			state.lat = action.payload.lat;
+			state.lng = action.payload.lng;
 		},
 	},
 });
@@ -46,38 +48,40 @@ export const getPlans = () => async (dispatch: any, getState: any) => {
 
 		let lat = getState().mapElements.lat;
 		let lon = getState().mapElements.lng;
-		let rad = 500;
+		let rad = 100;
 		let selectChoice = getState().mapElements.selectChoice;
-		let URL_PERMIT, res, data;
+		let URL = "", res, data;
 		let Btoken ="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY4NzI4OTg0MSwianRpIjoiZjgyNjZhN2YtN2VhOC00YjBhLWE1ZmQtODE5ZTNlZmIwMjAzIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6NTksIm5iZiI6MTY4NzI4OTg0MSwiY3NyZiI6ImUyYThiMzQ1LTI4ZWMtNDU2MC1iYmVjLWQ3ZDJhZTcyZmI3OSIsImV4cCI6MTY4Nzg5NDY0MX0.9hHhT7Qwlg8qkjmuuw44Wpsfe-Qqi-2kYrgCcVJFQlQ";
 
-		console.log(100, selectChoice, lat, lon, rad);
-
-		// pozowlenie na budowe
+		// GET Permit Index
 		if (selectChoice === "0") {
-			URL_PERMIT = `https://pointo.epp-services.pl:443/api/cs/urb/permit/index?lat=${lat}&lon=${lon}&rad=${rad}`;
+			URL = `https://pointo.epp-services.pl:443/api/cs/urb/permit/index?lat=${lat}&lon=${lon}&rad=${rad}`;
+		}
+		// GET Zone Plan Index
+		else if (selectChoice === "1") {
+			URL = `https://pointo.epp-services.pl:443/api/cs/urb/zplan/index?lat=${lat}&lon=${lon}&rad=${rad}`;
+		}
 
-			res = await fetch(URL_PERMIT, {
-				headers: { Authorization: "Bearer " + Btoken},
-			});
+		res = await fetch(URL, {
+			headers: { Authorization: "Bearer " + Btoken },
+		});
 
-			if (res.status === 404) {
+		if (res.status === 404) {
+			dispatch(setErrorState("Resource Not Found"))
+		}
 
-			}
+		if (res.status === 400) {
+			dispatch(setErrorState("Bad Request"));
+		}
 
-			if (res.status === 400) {
+		if (res.status === 500) {
+			dispatch(setErrorState("Uknown Error"));
+		}
 
-			}
+		data = await res.json();
 
-			if (res.status === 500) {
-
-			}
-
-			data = await res.json();
-
-			if (res.status === 200) {
-				dispatch(setJsonPlans(data));
-			}
+		if (res.status === 200) {
+			dispatch(setJsonPlans(data));
 		}
 
 	} catch (err: any) {
