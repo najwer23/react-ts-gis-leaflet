@@ -125,7 +125,7 @@ const Menu = (): JSX.Element => {
 								}}>
 									<Select
 										styles={OptionListForSelectCSS}
-										defaultValue={OptionListForSelect[0]}
+										defaultValue={OptionListForSelect[Number(selectChoice)]}
 										onChange={(choice) => setSelectChoice(choice!.value)}
 										options={OptionListForSelect}
 										isSearchable={false}
